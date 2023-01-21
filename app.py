@@ -8,18 +8,21 @@ complete_api_link = "https://api.openweathermap.org/data/2.5/weather?q="+locatio
 api_link = requests.get(complete_api_link)
 api_data = api_link.json()
 
-# Create variables to store and display data
-# Convert farenheit to celcius
-temp_city = ((api_data['main']['temp']) - 273.15)
-weather_desc = api_data['weather'][0]['description']
-humid = api_data['main']['humidity']
-wind_spd = api_data['wind']['speed']
-# Get Current Date time
-date_time = datetime.now().strftime("%d %b %Y | %I:%M:%S %p")
+if api_data['cod'] == '404':
+    print('Invalid City!')
+else:
+    # Create variables to store and display data
+    # Convert farenheit to celcius
+    temp_city = ((api_data['main']['temp']) - 273.15)
+    weather_desc = api_data['weather'][0]['description']
+    humid = api_data['main']['humidity']
+    wind_spd = api_data['wind']['speed']
+    # Get Current Date time
+    date_time = datetime.now().strftime("%d %b %Y | %I:%M:%S %p")
 
-print (f"Weather Report for - {location.upper()}  || {date_time}\n")
+    print (f"Weather Report for - {location.upper()}  || {date_time}\n")
 
-print ("Temperature          : {:.2f} deg C".format(temp_city))
-print ("Weather Description  :",weather_desc.upper())
-print ("Humidity             :",humid, '%')
-print ("Wind speed           :",wind_spd ,'kmph')
+    print ("Temperature          : {:.2f} deg C".format(temp_city))
+    print ("Weather Description  :",weather_desc.title())
+    print ("Humidity             :",humid, '%')
+    print ("Wind speed           :",wind_spd ,'kmph')
